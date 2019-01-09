@@ -43,12 +43,12 @@ spec:
               cpu: 1000m
           livenessProbe:
             tcpSocket:
-              port: 25
+              port: 2525
             initialDelaySeconds: 15
             periodSeconds: 60
           readinessProbe:
             tcpSocket:
-              port: 25
+              port: 2525
             initialDelaySeconds: 15
             periodSeconds: 20
           env:
