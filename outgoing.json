@@ -1,0 +1,7 @@
+{
+    "k8s-relay": {
+        "name": "k8s-relay",
+        "host": "master-smtp.smtp-production",
+        "port": "25"
+    }
+}

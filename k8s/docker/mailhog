@@ -1,6 +1,7 @@
 FROM mailhog/mailhog:latest
 
 ADD /startup.sh /startup.sh
+ADD /outgoing.json /home/mailhog/outgoing.json
 USER root
 RUN chmod +x /startup.sh
 RUN apk add --no-cache apache2-utils
