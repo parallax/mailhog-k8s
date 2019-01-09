@@ -62,4 +62,6 @@ spec:
               value: "/efs"
             - name: MH_SMTP_BIND_ADDR
               value: "0.0.0.0:2525"
+            - name: MH_HOSTNAME
+              value: "master-smtp.mailhog-production"
       terminationGracePeriodSeconds: 20
