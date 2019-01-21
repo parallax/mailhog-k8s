@@ -4,6 +4,7 @@ ADD /startup.sh /startup.sh
 ADD /outgoing.json /home/mailhog/outgoing.json
 USER root
 RUN chmod +x /startup.sh
+RUN chown mailhog:mailhog /startup.sh
 RUN apk add --no-cache apache2-utils
 
 USER mailhog
