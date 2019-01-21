@@ -7,4 +7,5 @@ RUN chmod +x /startup.sh
 RUN apk add --no-cache apache2-utils
 
 USER mailhog
-ENTRYPOINT ["/startup.sh"]
+ENTRYPOINT []
+CMD ["/startup.sh"]
