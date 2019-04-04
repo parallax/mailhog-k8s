@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: '{{ branch }}-smtp'
+  namespace: '{{ namespace }}'
+spec:
+  ports:
+  - name: smtp
+    port: 25
+    protocol: TCP
+    targetPort: 2525
+  selector:
+    app: '{{ app }}-{{ branch }}-{{ build }}'
+  sessionAffinity: None
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: '{{ branch }}-web'
+  namespace: '{{ namespace }}'
+spec:
+  ports:
+  - name: web
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: '{{ app }}-{{ branch }}-{{ build }}'
+  sessionAffinity: None
+  type: ClusterIP

@@ -1,0 +1,113 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
+  labels:
+    app: '{{ app }}-{{ branch }}-{{ build }}'
+  name: '{{ app }}-{{ branch }}-{{ build }}'
+  namespace: '{{ namespace }}'
+spec:
+  minReadySeconds: 10
+  progressDeadlineSeconds: 600
+  replicas: 2
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: '{{ app }}-{{ branch }}-{{ build }}'
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
+      labels:
+        app: '{{ app }}-{{ branch }}-{{ build }}'
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - '{{ app }}-{{ branch }}-{{ build }}'
+            topologyKey: kubernetes.io/hostname
+      containers:
+      - name: nginx-php
+        env:
+        - name: ENVIRONMENT
+          value: '{{ environment }}'
+        - name: AWS_HOST_ENVIRONMENT
+          value: '{{ environment }}'
+        - name: SITE_NAME
+          value: '{{ app }}'
+        - name: SITE_BRANCH
+          value: '{{ branch }}'
+        - name: BUILD
+          value: '{{ build }}'
+        - name: DB_HOST
+          valueFrom:
+            secretKeyRef:
+              name: 'mysql-credentials-{{ branch }}'
+              key: endpoint
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: 'mysql-credentials-{{ branch }}'
+              key: password
+        - name: DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: 'mysql-credentials-{{ branch }}'
+              key: username
+        - name: DB_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: 'mysql-credentials-{{ branch }}'
+              key: database
+        - name: DB_CONNECTION
+          value: mysql
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: 'aws-credentials'
+              key: AccessKeyId
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: 'aws-credentials'
+              key: SecretAccessKey
+        image: '{{ image:mailhog }}'
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          tcpSocket:
+            port: 2525
+          initialDelaySeconds: 15
+          periodSeconds: 60
+        readinessProbe:
+          tcpSocket:
+            port: 2525
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        ports:
+        - containerPort: 8080
+          name: web
+          protocol: TCP
+        - containerPort: 2525
+          name: smtp
+          protocol: TCP
+        resources:
+          limits:
+            cpu: "1"
+            memory: 1024Mi
+          requests:
+            cpu: 50m
+            memory: 64Mi
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 20

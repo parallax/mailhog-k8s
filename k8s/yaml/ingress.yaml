@@ -1,0 +1,30 @@
+repeat: eachDomain
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    
+  name: '{{ domain }}'
+  namespace: '{{ namespace }}'
+spec:
+  rules:
+  - host: '{{ domain }}'
+    http:
+      paths:
+      - backend:
+          serviceName: '{{ branch }}-web'
+          servicePort: 80
+  - host: '{{ domain_md5 }}.parallax.dev'
+    http:
+      paths:
+      - backend:
+          serviceName: '{{ branch }}-web'
+          servicePort: 80
+  tls:
+  - hosts:
+    - '{{ domain }}'
+    - '{{ domain_md5 }}.parallax.dev'
+    secretName: '{{ domain_md5 }}-ssl'

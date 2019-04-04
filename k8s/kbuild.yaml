@@ -1,0 +1,13 @@
+domains:
+  - domain: '{{ app }}.{{ branch }}.{{ environment }}.parallax.dev'
+    environments: '*'
+    branches: '*'
+  - domain: '{{ app }}.{{ environment }}.parallax.dev'
+    environments: '*'
+    branches: 'master'
+afterDeploy:
+  delete:
+    - kind: Deployment
+      namePattern: '{{ app }}-{{ branch }}-*'
+      nameApartFrom: '{{ app }}-{{ branch }}-{{ build }}'
+      namespace: '{{ namespace }}'
