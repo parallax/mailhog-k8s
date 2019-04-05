@@ -88,8 +88,6 @@ spec:
           value: "0.0.0.0:8080"
         - name: MH_SMTP_BIND_ADDR
           value: "0.0.0.0:2525"
-        - name: MH_HOSTNAME
-          value: "master-smtp.mailhog-prod"
         image: '{{ image:mailhog }}'
         imagePullPolicy: IfNotPresent
         livenessProbe:
