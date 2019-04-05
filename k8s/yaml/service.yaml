@@ -8,7 +8,7 @@ spec:
   - name: smtp
     port: 25
     protocol: TCP
-    targetPort: 2525
+    targetPort: 1025
   selector:
     app: '{{ app }}-{{ branch }}-{{ build }}'
   sessionAffinity: None
@@ -24,7 +24,7 @@ spec:
   - name: web
     port: 80
     protocol: TCP
-    targetPort: 8080
+    targetPort: 8025
   selector:
     app: '{{ app }}-{{ branch }}-{{ build }}'
   sessionAffinity: None
