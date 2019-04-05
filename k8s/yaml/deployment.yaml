@@ -82,8 +82,6 @@ spec:
             secretKeyRef:
               name: 'aws-credentials'
               key: SecretAccessKey
-        - name: MH_HOSTNAME
-          value: "mailhog.parallax.dev"
         image: '{{ image:mailhog }}'
         imagePullPolicy: IfNotPresent
         livenessProbe:
