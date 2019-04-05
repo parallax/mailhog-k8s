@@ -29,3 +29,21 @@ spec:
     app: '{{ app }}-{{ branch }}-{{ build }}'
   sessionAffinity: None
   type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: external-smtp
+  namespace: '{{ namespace }}'
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+spec:
+  externalTrafficPolicy: Local
+  ports:
+  - name: smtp
+    port: 25
+    protocol: TCP
+    targetPort: 1025
+  selector:
+    app: '{{ app }}-{{ branch }}-{{ build }}'
+type: LoadBalancer
