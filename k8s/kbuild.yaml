@@ -5,6 +5,9 @@ domains:
   - domain: '{{ app }}.{{ environment }}.parallax.dev'
     environments: '*'
     branches: 'master'
+  - domain: 'mailhog.parallax.dev'
+    environments: 'prod'
+    branches: 'master'
 afterDeploy:
   delete:
     - kind: Deployment
