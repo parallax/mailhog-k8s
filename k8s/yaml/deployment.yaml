@@ -86,19 +86,19 @@ spec:
         imagePullPolicy: IfNotPresent
         livenessProbe:
           tcpSocket:
-            port: 2525
+            port: 1025
           initialDelaySeconds: 15
           periodSeconds: 60
         readinessProbe:
           tcpSocket:
-            port: 2525
+            port: 1025
           initialDelaySeconds: 15
           periodSeconds: 20
         ports:
-        - containerPort: 8080
+        - containerPort: 8025
           name: web
           protocol: TCP
-        - containerPort: 2525
+        - containerPort: 1025
           name: smtp
           protocol: TCP
         resources:
