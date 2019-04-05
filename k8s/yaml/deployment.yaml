@@ -10,7 +10,7 @@ metadata:
 spec:
   minReadySeconds: 10
   progressDeadlineSeconds: 600
-  replicas: 2
+  replicas: 1
   revisionHistoryLimit: 1
   selector:
     matchLabels:
