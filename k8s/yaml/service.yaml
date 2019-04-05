@@ -46,4 +46,4 @@ spec:
     targetPort: 1025
   selector:
     app: '{{ app }}-{{ branch }}-{{ build }}'
-type: LoadBalancer
+  type: LoadBalancer
