@@ -6,7 +6,7 @@ domains:
     environments: '*'
     branches: 'master'
   - domain: 'mailhog.parallax.dev'
-    environments: 'prod'
+    environments: 'production'
     branches: 'master'
 afterDeploy:
   delete:
