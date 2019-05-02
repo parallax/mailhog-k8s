@@ -38,6 +38,8 @@ metadata:
   annotations:
     service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
 spec:
+  loadBalancerSourceRanges:
+  - 156.67.242.12/32
   externalTrafficPolicy: Local
   ports:
   - name: smtp
